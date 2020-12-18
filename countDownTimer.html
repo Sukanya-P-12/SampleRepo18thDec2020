@@ -1,0 +1,47 @@
+<html>
+	<head>
+	<script type="text/javascript" src="jquery-3.3.1.min.js">
+	</script>
+	<script type="text/javascript">
+	var intervalObj=null;
+	function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+     intervalObj=setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+		if(parseInt(minutes)>=1){
+        		display.text(minutes + ":" + seconds+" minutes!");
+        }
+        else{
+        		display.text(minutes + ":" + seconds+" seconds!");
+        }
+
+        if (--timer < 0) {
+            timer = 0;
+        }
+    }, 1000);
+}
+
+$("document").ready(function(){
+    var fiveMinutes = 60 * 2,
+        display = $('#time');
+    startTimer(fiveMinutes, display);
+	
+	
+	$(".resetSession").off("click").on("click",function(){
+	clearInterval(intervalObj);
+		startTimer(fiveMinutes, display);
+	})
+});
+</script>
+	</head>
+
+	<body>
+		 <div>Session ends in <span id="time">05:00</span></div>
+		 <input type="button" class="resetSession" value="RESET SESSION" />
+	</body>
+</html>
